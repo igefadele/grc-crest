@@ -47,7 +47,7 @@ export function LiveSidebar() {
 
   return (
     <aside
-      className="flex flex-col border-l"
+      className="flex flex-col min-h-0 border-l"
       style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
     >
       {/* Header */}

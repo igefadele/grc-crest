@@ -91,7 +91,7 @@ export function GRCDashboard() {
           </div>
           <div>
             <div className="text-[12px] font-bold tracking-widest" style={{ color: 'var(--color-text)' }}>
-              GRC COMMAND CENTER
+              GRC CREST - COMMAND CENTER
             </div>
             <div className="text-[9px] tracking-wide" style={{ color: 'var(--color-text-muted)' }}>
               CONTINUOUS-BY-DESIGN // POLICY-AS-CODE // AI-AUTOMATED
@@ -165,7 +165,7 @@ export function GRCDashboard() {
         </main>
 
         {/* Right: live sidebar — fixed width */}
-        <div className="w-72 shrink-0 overflow-hidden flex flex-col">
+        <div className="w-72 shrink-0 overflow-hidden flex flex-col min-h-0">
           <LiveSidebar />
         </div>
       </div>
