@@ -44,6 +44,9 @@ type UserRole = GRCUser['role']
  * Exported as `authConfig` for use in middleware (edge-compatible subset).
  */
 export const authConfig: NextAuthConfig = {
+  secret: process.env.AUTH_SECRET,
+  trustHost: true,
+
   /**
    * Custom pages — override NextAuth defaults so we control
    * the login UI completely.
