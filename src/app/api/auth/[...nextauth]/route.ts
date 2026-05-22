@@ -13,8 +13,7 @@
  * the auth() call in src/lib/auth.ts.
  */
 
-export { handlers as GET, handlers as POST } from '@/lib/auth'
-
-// Re-export so Next.js recognises the named exports
 import { handlers } from '@/lib/auth'
-export { handlers }
+
+export const GET = handlers.GET
+export const POST = handlers.POST

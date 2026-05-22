@@ -12,25 +12,27 @@
 
 import type { DefaultSession, DefaultJWT } from 'next-auth'
 
+type UserRole = 'admin' | 'analyst' | 'viewer'
+
 declare module 'next-auth' {
   interface Session {
     /** Whether the user has completed the MFA step in this session. */
     mfaVerified: boolean
     user: {
       id:   string
-      role: 'admin' | 'analyst' | 'viewer'
+      role: UserRole
     } & DefaultSession['user']
   }
 
   interface User {
-    role?: 'admin' | 'analyst' | 'viewer'
+    role?: UserRole
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT extends DefaultJWT {
     id:           string
-    role:         string
+    role:         UserRole
     mfaVerified:  boolean
   }
 }

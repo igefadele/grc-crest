@@ -35,6 +35,9 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import type { NextAuthConfig } from 'next-auth'
 import { verifyPassword, getUserByEmail } from '@/lib/users'
+import type { GRCUser } from '@/lib/users'
+
+type UserRole = GRCUser['role']
 
 /**
  * NextAuth v5 configuration object.
@@ -117,7 +120,7 @@ export const authConfig: NextAuthConfig = {
       // On initial sign-in, copy user fields onto the token
       if (user) {
         token.id          = user.id
-        token.role        = (user as { role?: string }).role ?? 'viewer'
+        token.role        = (user.role ?? 'viewer') as UserRole
         token.mfaVerified = false   // always starts false — MFA step required
       }
 
@@ -136,7 +139,7 @@ export const authConfig: NextAuthConfig = {
     async session({ session, token }) {
       if (token) {
         session.user.id          = token.id          as string
-        session.user.role        = token.role        as string
+        session.user.role        = token.role        as UserRole
         ;(session as { mfaVerified?: boolean }).mfaVerified = token.mfaVerified as boolean
       }
       return session

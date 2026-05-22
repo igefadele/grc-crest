@@ -31,7 +31,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { signIn }                  from 'next-auth/react'
+import { signIn, useSession }      from 'next-auth/react'
 import { useRouter }               from 'next/navigation'
 import { GlowButton }              from '@/components/ui/GlowButton'
 import type { MFAMethod }          from '@/types/grc'
@@ -44,6 +44,7 @@ type LoginStep = 'credentials' | 'mfa'
 
 export default function LoginPage() {
   const router = useRouter()
+  const { update } = useSession()
 
   // Form state
   const [step,        setStep]        = useState<LoginStep>('credentials')
@@ -120,7 +121,6 @@ export default function LoginPage() {
       // MFA passed — upgrade the session to mfaVerified: true
       // NextAuth's updateSession() triggers the jwt callback which
       // writes mfaVerified: true onto the token
-      const { update } = await import('next-auth/react')
       await update({ mfaVerified: true })
 
       // Redirect to the dashboard

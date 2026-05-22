@@ -6,6 +6,7 @@
 
 import type { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: 'GRC Command Center — Continuous Compliance by Design',
@@ -34,7 +35,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="h-full">
       <body className="h-full antialiased">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
