@@ -1,0 +1,43 @@
+{
+  "name": "grc-crest",
+  "version": "1.0.0",
+  "description": "GRC Crest - GRC Command Center & GRC-as-Code Automation Platform With Continuous Compliance by Design",
+  "private": true,
+  "author": {
+    "name": "Ige Fadele", 
+    "email": "ige.fadele@savadub.com", 
+    "url": "https://igefadele.savadub.com"
+  },
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "ai": "^4.3.0",
+    "@ai-sdk/anthropic": "^1.2.0",
+    "@ai-sdk/openai": "^1.3.0",
+    "next-auth": "^5.0.0-beta.28",
+    "@auth/core": "^0.37.0",
+    "nodemailer": "^6.9.0",
+    "otplib": "^12.0.1",
+    "qrcode": "^1.5.4",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/nodemailer": "^6.4.0",
+    "@types/qrcode": "^1.5.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.8.0",
+    "@types/bcryptjs": "^2.4.0"
+  }
+}

@@ -1,0 +1,168 @@
+/**
+ * globals.css
+ * Tailwind CSS v4 base import + GRC Command Center design tokens and animations.
+ *
+ * Design system:
+ * - Dark terminal aesthetic — operator console, not consumer dashboard
+ * - IBM Plex Mono as the primary typeface (monospace — reinforces "built by engineers")
+ * - Colour palette based on semantic meanings: green=safe, red=blocked, amber=warning, purple=ai
+ * - Minimal animations: only pulse (live indicator) and fade-slide (content transitions)
+ */
+
+/* ── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap');
+
+
+@import "tailwindcss";
+
+
+/* ── CSS Custom Properties (Design Tokens) ───────────────────────────────── */
+:root {
+  /* Background layers */
+  --color-bg:          #0A0D14;
+  --color-surface:     #0F1420;
+  --color-surface-alt: #131929;
+
+  /* Borders */
+  --color-border:      #1E2D45;
+  --color-border-bright: #2A4060;
+
+  /* Semantic accent colours */
+  --color-accent:      #00D4FF;
+  --color-accent-glow: rgba(0, 212, 255, 0.15);
+
+  --color-green:       #00FF88;
+  --color-green-glow:  rgba(0, 255, 136, 0.12);
+
+  --color-amber:       #FFB830;
+  --color-amber-glow:  rgba(255, 184, 48, 0.12);
+
+  --color-red:         #FF4560;
+  --color-red-glow:    rgba(255, 69, 96, 0.12);
+
+  --color-purple:      #B16CFF;
+  --color-purple-glow: rgba(177, 108, 255, 0.12);
+
+  --color-teal:        #00E5CC;
+  --color-teal-glow:   rgba(0, 229, 204, 0.12);
+
+  /* Text hierarchy */
+  --color-text:        #E2EAF4;
+  --color-text-muted:  #7A9BBD;
+  --color-text-dim:    #4A6080;
+
+  /* Typography */
+  --font-mono: 'IBM Plex Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+/* ── Base Styles ──────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-bright);
+}
+
+/* ── Animations ───────────────────────────────────────────────────────────── */
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ── Utility Animation Classes ────────────────────────────────────────────── */
+
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease forwards;
+}
+
+.animate-fade-down {
+  animation: fade-down 0.4s ease forwards;
+}
+
+.animate-scanline {
+  animation: scanline 10s linear infinite;
+  pointer-events: none;
+}
+
+/* ── Code blocks ──────────────────────────────────────────────────────────── */
+
+pre,
+code {
+  font-family: var(--font-mono);
+}
+
+pre {
+  overflow-x: auto;
+}
+
+/* ── Form elements ────────────────────────────────────────────────────────── */
+
+textarea,
+input,
+select {
+  font-family: var(--font-mono);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* Remove default select arrow — we control styling */
+select {
+  appearance: none;
+}
