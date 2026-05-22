@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @description GRC Command Center — main application page.
+ * @description GRC Crest - Command Center — main application page.
  *
  * Architecture:
  * - Next.js App Router page component (server component by default)

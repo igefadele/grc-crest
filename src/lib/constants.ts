@@ -1,6 +1,6 @@
 /**
  * @file constants.ts
- * @description All static data for the GRC Command Center.
+ * @description All static data for the GRC Crest - Command Center.
  *
  * Keeping data here (not inside components) means:
  * - Components stay clean and only contain rendering logic

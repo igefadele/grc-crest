@@ -1,6 +1,6 @@
 /**
  * @file GRCDashboard.tsx
- * @description Root client component for the GRC Command Center.
+ * @description Root client component for the GRC Crest - Command Center.
  *
  * Owns the active tab state and renders the correct tab component.
  * This is the only client boundary at the top level — child tab

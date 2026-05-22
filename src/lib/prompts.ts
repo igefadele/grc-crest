@@ -1,6 +1,6 @@
 /**
  * @file prompts.ts
- * @description System prompts for every AI agent in the GRC Command Center.
+ * @description System prompts for every AI agent in the GRC Crest - Command Center.
  *
  * Keeping prompts in a dedicated file means:
  * - Prompts can be versioned, reviewed, and iterated without touching UI code

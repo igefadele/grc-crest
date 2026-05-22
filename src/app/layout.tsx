@@ -9,7 +9,7 @@ import '@/styles/globals.css'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: 'GRC Command Center — Continuous Compliance by Design',
+  title: 'GRC Crest - Command Center — Continuous Compliance by Design',
   description:
     'GRC-as-Code automation platform. Policy-as-Code, continuous controls monitoring, AI vendor risk assessment, and automated evidence collection. Built for elite GRC engineering teams.',
   keywords: [

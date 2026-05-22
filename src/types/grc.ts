@@ -1,6 +1,6 @@
 /**
  * @file grc.ts
- * @description All TypeScript interfaces, types, and enums for the GRC Command Center.
+ * @description All TypeScript interfaces, types, and enums for the GRC Crest - Command Center.
  *
  * Centralising types here means every component and lib function imports from
  * a single source of truth. Changing a type here propagates compiler errors

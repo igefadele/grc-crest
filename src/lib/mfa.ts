@@ -59,7 +59,7 @@ export function generateTOTPSecret(): string {
  * @returns      - otpauth:// URI string
  */
 export function generateTOTPUri(email: string, secret: string): string {
-  const issuer = process.env.TOTP_ISSUER ?? 'GRC Command Center'
+  const issuer = process.env.TOTP_ISSUER ?? 'GRC Crest - Command Center'
   return authenticator.keyuri(email, issuer, secret)
 }
 
@@ -154,13 +154,13 @@ export async function sendEmailOTP(email: string): Promise<void> {
 
   // Send the email
   const transport = createEmailTransport()
-  const fromName  = process.env.SMTP_FROM_NAME ?? 'GRC Command Center'
+  const fromName  = process.env.SMTP_FROM_NAME ?? 'GRC Crest - Command Center'
   const fromEmail = process.env.SMTP_USER
 
   await transport.sendMail({
     from:    `"${fromName}" <${fromEmail}>`,
     to:      email,
-    subject: 'Your GRC Command Center login code',
+    subject: 'Your GRC Crest - Command Center login code',
     html: `
       <div style="font-family: 'IBM Plex Mono', monospace; background: #0A0D14; color: #E2EAF4; padding: 32px; max-width: 480px; margin: 0 auto;">
         <div style="border: 1px solid #00D4FF; padding: 24px;">
@@ -180,7 +180,7 @@ export async function sendEmailOTP(email: string): Promise<void> {
         </div>
       </div>
     `,
-    text: `Your GRC Command Center login code: ${code}\n\nExpires in 10 minutes.`,
+    text: `Your GRC Crest - Command Center login code: ${code}\n\nExpires in 10 minutes.`,
   })
 }
 

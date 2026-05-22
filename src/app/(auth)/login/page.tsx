@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @description GRC Command Center login page.
+ * @description GRC Crest - Command Center login page.
  *
  * Two-step login flow:
  * ────────────────────
@@ -21,7 +21,7 @@
  *
  * Design choices:
  * ───────────────
- * - Matches the GRC Command Center dark terminal aesthetic
+ * - Matches the GRC Crest - Command Center dark terminal aesthetic
  * - Error messages are deliberately vague on step 1 to prevent
  *   user enumeration ("Invalid credentials" not "User not found")
  * - The MFA method toggle (authenticator app vs email) lets the user
@@ -340,7 +340,7 @@ export default function LoginPage() {
                 style={{ color: 'var(--color-text-muted)' }}
               >
                 Open your authenticator app and enter the 6-digit code for{' '}
-                <span style={{ color: 'var(--color-accent)' }}>GRC Command Center</span>.
+                <span style={{ color: 'var(--color-accent)' }}>GRC Crest - Command Center</span>.
               </div>
             )}
 

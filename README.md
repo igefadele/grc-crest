@@ -1,4 +1,4 @@
-# ⬡ GRC Command Center
+# ⬡ GRC Crest - Command Center
 
 > **The only GRC platform built the way software engineers build infrastructure — as code, in pipelines, monitored in real-time, and automated end-to-end.**
 
@@ -46,7 +46,7 @@
 
 ## What Is This? (Executive Summary)
 
-**GRC Command Center** is a fully automated Governance, Risk & Compliance (GRC) operations platform — built entirely as software, not spreadsheets.
+**GRC Crest - Command Center** is a fully automated Governance, Risk & Compliance (GRC) operations platform — built entirely as software, not spreadsheets.
 
 ### The Problem It Solves
 
@@ -62,7 +62,7 @@ This is expensive, error-prone, and does not scale. A team of 5 GRC analysts can
 
 ### The Solution
 
-GRC Command Center replaces manual GRC work with a **Continuous-by-Design automation system** that:
+GRC Crest - Command Center replaces manual GRC work with a **Continuous-by-Design automation system** that:
 
 | What it does | How |
 |---|---|
@@ -932,9 +932,9 @@ More importantly, it is **reactive**. By the time a GRC analyst reviews an audit
 
 ### What This Platform Delivers
 
-**GRC Command Center replaces a reactive, document-driven compliance programme with a proactive, code-driven compliance system.**
+**GRC Crest - Command Center replaces a reactive, document-driven compliance programme with a proactive, code-driven compliance system.**
 
-| Metric | Traditional GRC | GRC Command Center |
+| Metric | Traditional GRC | GRC Crest - Command Center |
 |---|---|---|
 | Automation rate | ~20% | 98.3% |
 | Time to detect a compliance violation | Hours to days | Seconds |
@@ -1069,7 +1069,7 @@ Contributions are welcome. Please follow these steps:
 
 ## License
 
-MIT License — Copyright (c) 2025 GRC Command Center
+MIT License — Copyright (c) 2025 GRC Crest - Command Center
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
