@@ -124,8 +124,8 @@ export async function verifyPassword(
 
     // Production path: bcryptjs comparison
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const bcrypt = require('bcryptjs')
-    return await bcrypt.compare(plaintext, hashedPassword)
+    const { compare } = require('bcrypt-ts')
+    return await compare(plaintext, hashedPassword)
   } catch {
     // Development fallback: direct comparison
     // WARNING: Only for dev/testing without bcryptjs installed

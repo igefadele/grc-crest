@@ -1446,7 +1446,7 @@ Deep command of SOC 2 Trust Service Criteria, ISO 27001 Annex A, and NIST 800-53
 | Authentication | NextAuth (Auth.js) | v5 beta |
 | TOTP | otplib | 12.0 |
 | Email | Nodemailer | 6.9 |
-| Password Hashing | bcryptjs | 2.4 |
+| Password Hashing | bcrypt-ts | 8.0.1 |
 | QR Code | qrcode | 1.5 |
 | Policy Enforcement | OPA, Rego, Conftest | — |
 | SAST / Scanning | Semgrep, TruffleHog, Snyk | — |
