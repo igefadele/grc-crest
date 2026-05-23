@@ -47,6 +47,8 @@
  * ──────────────────────────────────────────────────────────────────
  */
 
+import { isValid } from "zod/v3"
+
 /**
  * The shape of a GRC user record in the store.
  * Passwords are stored as bcrypt hashes — never in plaintext.
@@ -116,13 +118,8 @@ export async function verifyPassword(
   plaintext: string,
   hashedPassword: string,
 ): Promise<boolean> {
-
-  if (process.env.NODE_ENV === 'development') {
-      console.warn('[users.ts] bcryptjs not available — using plaintext comparison (dev only)')
-      return plaintext === hashedPassword
-    }
-    return false
-  /* try {
+  try {
+    console.log('[users.ts] Verifying password with bcryptjs')
     // Production path: bcryptjs comparison
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const bcrypt = require('bcryptjs')
@@ -136,5 +133,5 @@ export async function verifyPassword(
       return plaintext === hashedPassword
     }
     return false
-  } */
+  }
 }

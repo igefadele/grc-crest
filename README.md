@@ -9,7 +9,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6.svg)](https://www.typescriptlang.org)
 [![Tailwind CSS 4](https://img.shields.io/badge/Tailwind-4.0-38BDF8.svg)](https://tailwindcss.com)
 [![Vercel AI SDK](https://img.shields.io/badge/Vercel_AI_SDK-4.3-black.svg)](https://sdk.vercel.ai)
-[![NextAuth v5](https://img.shields.io/badge/NextAuth-v5-purple.svg)](https://authjs.dev)
+[![NextAuth v5 (Auth.js)](https://img.shields.io/badge/NextAuth-v5-purple.svg)](https://authjs.dev)
 [![GRC-as-Code](https://img.shields.io/badge/GRC-as--Code-00FF88.svg)](#architecture-the-five-layers)
 [![AI Powered](https://img.shields.io/badge/AI-Claude%20%7C%20OpenAI-FFB830.svg)](#ai-provider-switching)
 
@@ -177,10 +177,10 @@ AI agents collect audit evidence continuously — auditor arrives to a live dash
 
 ## Project Structure
 
-This is a **Next.js 15** application with **React 19**, **TypeScript 5.8**, **Tailwind CSS 4**, **Vercel AI SDK 4**, and **NextAuth v5**.
+This is a **Next.js 15** application with **React 19**, **TypeScript 5.8**, **Tailwind CSS 4**, **Vercel AI SDK 4**, and **NextAuth v5 (Auth.js)**.
 
 ```
-grc-command-center/
+grc-crest/
 │
 ├── src/
 │   │
@@ -394,6 +394,11 @@ There is intentionally no registration form or self-service sign-up. This mirror
 
 **To revoke access:** Remove the user from `AUTHORISED_USERS` and redeploy. Their session will be invalidated on the next request (sessions are re-validated on each page load against the JWT).
 
+#### N.B:
+If you generate a hashed password and the value has _`$`_ in it like _`$2a$12$aaEhs8vqpBlaD2z0/N7MjOFQYddCrSRniyNAIxm7kOMHS0eZqaLWC`_, then you need to add `\` before each `$` to escape it so that the shell/runtime will not be interpreting the $ symbols as variable expansions. 
+
+The example value of _`"$2a$12$aaEhs8vqpBlaD2z0/N7MjOFQYddCrSRniyNAIxm7kOMHS0eZqaLWC"`_ will now be _`"\$2a\$12\$aaEhs8vqpBlaD2z0/N7MjOFQYddCrSRniyNAIxm7kOMHS0eZqaLWC"`_
+
 ---
 
 ### Session Security
@@ -428,7 +433,7 @@ Roles are set by administrators in the `AUTHORISED_USERS` env var. Users cannot 
 
 ### Why Vercel AI SDK
 
-The previous version called each provider's API manually using `fetch()`. This meant:
+If I had chosen to call each provider's API manually using `fetch()`. This meant:
 
 - A separate request format for Anthropic (`messages` array with `system` as a top-level field) vs OpenAI (`messages` array with `{ role: 'system', content }`)
 - Separate response parsers for each provider's response shape
@@ -440,7 +445,7 @@ The previous version called each provider's API manually using `fetch()`. This m
 The **Vercel AI SDK** (`ai` package) replaces all of this with a unified interface:
 
 ```typescript
-// Before: manual fetch, manual parsing, provider-specific code
+// Without Vercel AI SDK: manual fetch, manual parsing, provider-specific code
 const res = await fetch('https://api.anthropic.com/v1/messages', {
   method: 'POST',
   headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', ... },
@@ -449,7 +454,7 @@ const res = await fetch('https://api.anthropic.com/v1/messages', {
 const data = await res.json()
 const text = data.content?.map(b => b.text).join('') ?? ''
 
-// After: one function, any provider, full type safety
+// With Vercel AI SDK: one function, any provider, full type safety
 const { text } = await generateText({
   model,        // ← returned by getModel() factory — provider-agnostic
   system:       systemPrompt,
@@ -687,12 +692,12 @@ The custom provider uses the OpenAI chat completions format, which is compatible
 
 ```bash
 # 1. Clone or unzip the project
-git clone https://github.com/your-username/grc-command-center.git
-cd grc-command-center
+git clone https://github.com/igefadele/grc-crest.git
+cd grc-crest
 
 # OR from the zip:
-unzip grc-command-center-v4.zip
-cd grc-command-center
+unzip grc-crest.zip
+cd grc-crest
 
 # 2. Install dependencies
 npm install
@@ -783,7 +788,7 @@ AUTHORISED_USERS='[
     "email": "analyst@yourcompany.com",
     "name": "Jane Smith",
     "role": "analyst",
-    "hashedPassword": "$2a$12$your_generated_hash",
+    "hashedPassword": "\$2a\$12$your_generated_hash",
     "totpSecret": "JBSWY3DPEHPK3PXP",
     "mfaMethod": "totp"
   },
@@ -792,7 +797,7 @@ AUTHORISED_USERS='[
     "email": "viewer@yourcompany.com",
     "name": "Bob Jones",
     "role": "viewer",
-    "hashedPassword": "$2a$12$another_generated_hash",
+    "hashedPassword": "\$2a\$12\$another_generated_hash",
     "totpSecret": null,
     "mfaMethod": "email"
   }
@@ -905,7 +910,7 @@ Zero configuration — Vercel auto-detects Next.js and handles all server-side r
 **Step 1: Push to GitHub**
 ```bash
 git init && git add . && git commit -m "Initial commit"
-git remote add origin https://github.com/your-username/grc-command-center.git
+git remote add origin https://github.com/your-username/grc-crest.git
 git push -u origin main
 ```
 
@@ -1040,7 +1045,7 @@ The application is a standard Next.js app and deploys to any platform supporting
 - **AWS App Runner** — Simplest managed option. Connect container registry, set env vars in the service configuration.
 
 **Google Cloud:**
-- **Cloud Run** — `gcloud run deploy grc-command-center --image gcr.io/your-project/grc --set-secrets AUTH_SECRET=grc-auth-secret:latest`
+- **Cloud Run** — `gcloud run deploy grc-crest --image gcr.io/your-project/grc --set-secrets AUTH_SECRET=grc-auth-secret:latest`
 - **Firebase Hosting + Cloud Functions** — Supports Next.js SSR.
 
 **Microsoft Azure:**
@@ -1186,55 +1191,55 @@ This section defines every technical term used in the application so non-technic
 
 ---
 
-**API (Application Programming Interface)**
+**API (Application Programming Interface):**
 A way for software systems to communicate. When this application calls the Claude or OpenAI API, it sends a structured request to their servers and receives a structured response — like filling in a form and getting an answer.
 
-**App Password (SMTP / Gmail)**
+**App Password (SMTP / Gmail):**
 A separate password generated specifically for an application to use with your email account — without giving the application access to your main account password. Required for Gmail's App Password feature when SMTP access is needed.
 
-**Audit Trail**
+**Audit Trail:**
 A chronological, tamper-resistant record of events. In compliance, an audit trail proves to auditors that security controls operated correctly during a specific period.
 
-**bcrypt**
+**bcrypt:**
 A password hashing algorithm. Instead of storing a user's password, the system stores an irreversible mathematical transformation of it. Even if the user database is stolen, the original passwords cannot be recovered.
 
-**Blast Radius**
+**Blast Radius:**
 The scope of damage if a security incident is not contained — which systems, what data, how many users.
 
-**CAIQ (Consensus Assessment Initiative Questionnaire)**
+**CAIQ (Consensus Assessment Initiative Questionnaire):**
 A standardised security questionnaire from the Cloud Security Alliance used to assess cloud vendor security practices.
 
-**CCM (Continuous Controls Monitoring)**
+**CCM (Continuous Controls Monitoring):**
 The practice of monitoring security controls in real time, rather than checking them once per year at audit time. This platform implements CCM via live event streaming.
 
-**Checkov**
+**Checkov:**
 An open-source static analysis tool for infrastructure-as-code. Catches security violations in Terraform files before infrastructure is deployed.
 
-**CI/CD Pipeline (Continuous Integration / Continuous Deployment)**
+**CI/CD Pipeline (Continuous Integration / Continuous Deployment):**
 The automated process that takes developer code, runs checks, and deploys it to production. Compliance gates are embedded into this pipeline.
 
-**CloudTrail (AWS CloudTrail)**
+**CloudTrail (AWS CloudTrail):**
 An AWS service recording every API call in an account — who did what, when, from where. The cloud equivalent of CCTV footage.
 
-**Cookie (httpOnly)**
+**Cookie (httpOnly):**
 A piece of data stored in the browser. An httpOnly cookie cannot be read by JavaScript — only sent automatically by the browser to the server. This prevents session tokens from being stolen by malicious scripts (XSS attacks).
 
-**CVSS Score**
+**CVSS Score:**
 A 0.0–10.0 score measuring software vulnerability severity. Scores ≥ 8.0 are blocked automatically by this platform's CI/CD gates.
 
-**CVE (Common Vulnerabilities and Exposures)**
+**CVE (Common Vulnerabilities and Exposures):**
 A publicly listed software vulnerability with a unique identifier (e.g. CVE-2024-3811).
 
-**Dependabot**
+**Dependabot:**
 A GitHub tool that automatically creates pull requests to update vulnerable software dependencies.
 
-**DevSecOps**
+**DevSecOps:**
 Integrating security into the DevOps development workflow — making security continuous and automated rather than a final checkpoint.
 
-**Drift (Configuration Drift)**
+**Drift (Configuration Drift):**
 When a live system's configuration diverges from its approved baseline without authorisation. This platform detects and auto-heals drift within seconds.
 
-**GDPR (General Data Protection Regulation)**
+**GDPR (General Data Protection Regulation):**
 The EU's data protection law. Fines up to 4% of global annual turnover for non-compliance.
 
 **GRC (Governance, Risk & Compliance)**
@@ -1243,101 +1248,101 @@ Three disciplines:
 - **Risk:** Identifying and managing threats
 - **Compliance:** Meeting all applicable laws and regulations
 
-**GRC-as-Code**
+**GRC-as-Code:**
 Expressing GRC policies and controls as machine-readable code in version control — not Word documents.
 
-**IAM (Identity and Access Management)**
+**IAM (Identity and Access Management):**
 The AWS system controlling who can access what. IAM policies define permissions; IAM roles are assigned to services and users.
 
-**ISO 27001**
+**ISO 27001:**
 The international standard for Information Security Management Systems. Required by many enterprise clients and government agencies.
 
-**JWT (JSON Web Token)**
+**JWT (JSON Web Token):**
 A compact, digitally signed token used to store session information. The signature ensures the token cannot be tampered with. This application stores the JWT in an httpOnly cookie.
 
-**LLM (Large Language Model)**
+**LLM (Large Language Model):**
 An AI model capable of understanding and generating human-like text. Claude (Anthropic) and GPT-4o (OpenAI) are LLMs.
 
-**MFA (Multi-Factor Authentication)**
+**MFA (Multi-Factor Authentication):**
 Requiring users to verify identity using two or more methods. This platform implements MFA as: something you know (password) + something you have (authenticator app or email access).
 
-**NextAuth (Auth.js)**
+**NextAuth (Auth.js):**
 The open-source authentication library used to implement login, sessions, and MFA in this application. Version 5 (beta) is used for full Next.js App Router compatibility.
 
-**NIST 800-53**
+**NIST 800-53:**
 A US government security control catalogue. Required for federal IT systems; widely adopted as industry best practice.
 
-**n8n**
-An open-source workflow automation tool used to trigger auto-remediation scripts when violations are detected.
+**n8n:**
+An open-source workflow automation tool that can be used in this setup to trigger auto-remediation scripts when violations are detected.
 
 **OPA (Open Policy Agent)**
 An open-source policy engine for enforcing rules across infrastructure using the Rego language.
 
-**otplib**
+**otplib:**
 The Node.js library used by this application to generate and verify TOTP codes (RFC 6238). Compatible with Google Authenticator, Authy, and all standard TOTP apps.
 
-**PaC (Policy-as-Code)**
+**PaC (Policy-as-Code):**
 Writing compliance policies as machine-readable code that can be version-controlled, tested, and automatically enforced.
 
-**Penetration Test (Pentest)**
+**Penetration Test (Pentest):**
 A simulated cyberattack by security professionals to find vulnerabilities before real attackers do. Required annually by most compliance frameworks.
 
-**Prometheus**
+**Prometheus:**
 An open-source monitoring and alerting system used to collect real-time metrics from infrastructure.
 
-**RAG (Retrieval-Augmented Generation)**
+**RAG (Retrieval-Augmented Generation):**
 An AI technique giving a language model access to a document database to retrieve relevant context before generating a response.
 
-**Rate Limiting**
+**Rate Limiting:**
 Restricting how many times an action can be performed in a given time window. This platform rate-limits MFA verification attempts (5 per 15 minutes) and email OTP sends (3 per 15 minutes) to prevent brute-force attacks.
 
-**Rego**
+**Rego:**
 The policy language used by Open Policy Agent. Logic-based syntax that evaluates input data and returns allow/deny decisions.
 
-**Risk Acceptance**
+**Risk Acceptance:**
 A formal decision to accept a known security risk rather than fix it. One of the three categories that always escalates to a human in this platform.
 
-**SCP (Service Control Policy)**
+**SCP (Service Control Policy):**
 An AWS Organisations feature enforcing permission boundaries across an entire account.
 
-**Semgrep**
+**Semgrep:**
 An open-source static analysis tool scanning source code for security vulnerabilities.
 
-**SMTP (Simple Mail Transfer Protocol)**
+**SMTP (Simple Mail Transfer Protocol):**
 The standard protocol for sending email. This application uses SMTP to deliver email OTP codes.
 
-**SOC 2 (System and Organisation Controls 2)**
+**SOC 2 (System and Organisation Controls 2):**
 A US auditing framework for technology companies. SOC 2 Type II is required by most enterprise SaaS customers before signing contracts.
 
-**TOTP (Time-based One-Time Password)**
+**TOTP (Time-based One-Time Password):**
 A standard (RFC 6238) for generating short-lived codes using a shared secret. Google Authenticator implements TOTP. Codes change every 30 seconds and cannot be reused.
 
-**Terraform**
+**Terraform:**
 An infrastructure-as-code tool for defining cloud infrastructure in configuration files. OPA rules evaluate Terraform plans before deployment.
 
-**TruffleHog**
+**TruffleHog:**
 An open-source tool scanning git repositories for accidentally exposed secrets like API keys.
 
-**TypeScript**
+**TypeScript:**
 A typed superset of JavaScript. Type annotations are checked at compile time — catching contract errors before runtime. This codebase uses strict TypeScript 5.8.
 
-**Vercel AI SDK**
+**Vercel AI SDK:**
 The official AI library from Vercel used in this application. Provides a unified `generateText()` function that works with Anthropic Claude, OpenAI GPT, and any OpenAI-compatible endpoint — eliminating provider-specific request/response code.
 
-**VSAQ (Vendor Security Assessment Questionnaire)**
+**VSAQ (Vendor Security Assessment Questionnaire):**
 A detailed security questionnaire sent to vendors to assess their security posture before onboarding.
 
 ---
 
 ## For Directors & Executives
 
-> This section gives you a complete non-technical understanding of what has been built, why it matters, and what it means for your organisation's risk posture.
+> This section gives you a complete non-technical understanding of what has been built into this application, why it matters, and what it means for your organisation's risk posture.
 
 ### The Business Problem
 
 Your organisation has compliance requirements — SOC 2, ISO 27001, GDPR, or others. Meeting these requirements traditionally means hiring GRC analysts to write policies, collect evidence, and scramble every year before an audit. The process is expensive, slow, and almost entirely manual.
 
-More importantly, it is **reactive**. By the time a GRC analyst reviews an audit log and discovers a security violation, it may have been in your production environment for days or weeks.
+More importantly, it is **reactive**. By the time a GRC analyst reviews an audit log and discovers a security violation, it may have been in your production environment for days, weeks, or months. It's also possible that by that time, it has costed your business severely in different ways.
 
 ### What This Platform Delivers
 
@@ -1564,8 +1569,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Recommended: [GRC Den](https://github.com/igefadele/grc-den)
 
-If you want to horn your skills in GRC, get production-grade GRC Artifacts that you cam start using today, or you want to transition to GRC, then The [GRC Den Repo](https://github.com/igefadele/grc-den) is the repo you need.
+Apart from **"GRC Crest"** project, I also created **"GRC Den"**.
 
-It's free and open-source. I created [GRC Den](https://github.com/igefadele/grc-den) to help the GRC community, professionals, and those who want to save time doing trial-and-error artifacts creation.
+If you want to horn your skills in GRC, get production-grade GRC Artefacts that you can start using today, or you want to transition to GRC, then The [GRC Den Repo](https://github.com/igefadele/grc-den) is the repo you need.
+
+It's free and open-source. 
+
+I created [GRC Den](https://github.com/igefadele/grc-den) to help the GRC community, and all GRC professionals become more compliance-savvy. Also, it's to help those who want to save time doing trial-and-error artefacts creation.
 
 ---
