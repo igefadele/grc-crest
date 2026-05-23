@@ -1,4 +1,4 @@
-# ⬡ GRC Crest - Command Center
+# ⬡ GRC Crest
 
 > **The only GRC platform built the way software engineers build infrastructure — as code, in pipelines, monitored in real-time, and automated end-to-end.**
 
@@ -16,7 +16,7 @@
 ---
 
 ### Author: [Ige Fadele](https://igefadele.savadub.com)
-[Website](https://igefadele.savadub.com) | [LinkedIn](https://linkedin.com/in/igefadele) | [Facebook](https://facebook.com/igefadele) | [X (Twitter)](https://x.com/igefadele) | [Instagram](https://instagram.com/igefadele) | [TikTok](https://tiktok.com/@igefadele) | [YouTube](https://youtube.com/@igefadele)
+[Website](https://igefadele.savadub.com) | [LinkedIn](https://linkedin.com/in/igefadele) | [Facebook](https://facebook.com/igefadele) | [X (Twitter)](https://x.com/igefadele) | [Instagram](https://instagram.com/igefadele) | [TikTok](https://tiktok.com/@igefadele) | [YouTube](https://youtube.com/@igefadele) | [GRC Den](https://github.com/igefadele/grc-den)
 
 ---
 
@@ -66,7 +66,7 @@
 
 ## What Is This? (Executive Summary)
 
-**GRC Command Center** is a fully automated Governance, Risk & Compliance (GRC) operations platform — built entirely as software, not spreadsheets.
+**GRC Crest** is a fully automated Governance, Risk & Compliance (GRC) operations platform — built entirely as software, not spreadsheets.
 
 ### The Problem It Solves
 
@@ -82,7 +82,7 @@ This is expensive, error-prone, and does not scale.
 
 ### The Solution
 
-GRC Command Center replaces manual GRC work with a **Continuous-by-Design automation system** that:
+GRC Crest Command Center replaces manual GRC work with a **Continuous-by-Design automation system** that:
 
 | What it does | How |
 |---|---|
@@ -284,7 +284,7 @@ grc-command-center/
 
 ### How Login Works (Two Steps)
 
-The GRC Command Center uses a strict two-factor authentication flow. There is no self-registration — all accounts are provisioned by administrators.
+The GRC Crest uses a strict two-factor authentication flow. There is no self-registration — all accounts are provisioned by administrators.
 
 ```
 STEP 1 — CREDENTIALS
@@ -723,8 +723,8 @@ SMTP_PORT=587
 SMTP_SECURE=false
 SMTP_USER=you@gmail.com
 SMTP_PASS=your_app_password
-SMTP_FROM_NAME=GRC Command Center
-TOTP_ISSUER=GRC Command Center
+SMTP_FROM_NAME=GRC Crest
+TOTP_ISSUER=GRC Crest
 
 # ── Public — safe for browser ────────────────────────────────────────
 NEXT_PUBLIC_AI_PROVIDER=claude
@@ -839,7 +839,7 @@ Remove the user from the `AUTHORISED_USERS` array and redeploy. Their existing J
    node -e "
    const { authenticator } = require('otplib');
    const secret = 'JBSWY3DPEHPK3PXP';   // replace with the generated secret
-   const uri = authenticator.keyuri('user@company.com', 'GRC Command Center', secret);
+   const uri = authenticator.keyuri('user@company.com', 'GRC Crest', secret);
    console.log(uri);
    "
    ```
@@ -850,8 +850,8 @@ Remove the user from the `AUTHORISED_USERS` array and redeploy. Their existing J
 
 1. Open Google Authenticator (or Authy / Microsoft Authenticator).
 2. Tap **+** → **Scan a QR code** (scan the image provided by your admin), OR tap **Enter a setup key** and type the Base32 secret manually.
-3. An entry called **GRC Command Center** (or your configured `TOTP_ISSUER`) will appear, showing a 6-digit code that refreshes every 30 seconds.
-4. Log in to GRC Command Center using your email + password, then enter the 6-digit code when prompted.
+3. An entry called **GRC Crest** (or your configured `TOTP_ISSUER`) will appear, showing a 6-digit code that refreshes every 30 seconds.
+4. Log in to GRC Crest using your email + password, then enter the 6-digit code when prompted.
 
 **Replacing a lost device:**
 
@@ -927,7 +927,7 @@ AUTHORISED_USERS         ← the full JSON array (paste as a single value)
 AI_PROVIDER              ← claude
 AI_MODEL                 ← claude-sonnet-4-20250514
 ANTHROPIC_API_KEY        ← sk-ant-...
-TOTP_ISSUER              ← GRC Command Center
+TOTP_ISSUER              ← GRC Crest
 SMTP_HOST                ← your SMTP host
 SMTP_USER                ← your SMTP user
 SMTP_PASS                ← your SMTP password
@@ -1012,7 +1012,7 @@ services:
       - AI_PROVIDER=claude
       - AI_MODEL=claude-sonnet-4-20250514
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-      - TOTP_ISSUER=GRC Command Center
+      - TOTP_ISSUER=GRC Crest
       - SMTP_HOST=${SMTP_HOST}
       - SMTP_PORT=587
       - SMTP_SECURE=false
@@ -1062,7 +1062,7 @@ All variables live in `.env.local` for local development. Set them in your hosti
 | `AUTH_SECRET` | **Yes** | Random 32-character string for signing JWT tokens. Generate: `openssl rand -base64 32`. Keep absolutely secret. |
 | `NEXTAUTH_URL` | **Yes** | Full URL of your deployment. `http://localhost:3000` locally; `https://your-domain.com` in production. |
 | `AUTHORISED_USERS` | **Yes** | JSON array of user objects. See [Adding Users](#adding-users-administrator-guide) for the full schema. |
-| `TOTP_ISSUER` | No | Name shown in the authenticator app. Default: `GRC Command Center`. |
+| `TOTP_ISSUER` | No | Name shown in the authenticator app. Default: `GRC Crest`. |
 
 ### Email / SMTP (for Email OTP MFA)
 
@@ -1073,7 +1073,7 @@ All variables live in `.env.local` for local development. Set them in your hosti
 | `SMTP_SECURE` | No | `true` for SSL/port 465; `false` for STARTTLS/port 587. Default: `false`. |
 | `SMTP_USER` | **Yes** (email OTP) | SMTP username / email address. |
 | `SMTP_PASS` | **Yes** (email OTP) | SMTP password or App Password. Never your main account password. |
-| `SMTP_FROM_NAME` | No | Display name in the From field. Default: `GRC Command Center`. |
+| `SMTP_FROM_NAME` | No | Display name in the From field. Default: `GRC Crest`. |
 
 ### AI Provider
 
@@ -1341,9 +1341,9 @@ More importantly, it is **reactive**. By the time a GRC analyst reviews an audit
 
 ### What This Platform Delivers
 
-**GRC Command Center replaces a reactive, document-driven compliance programme with a proactive, code-driven compliance system.**
+**GRC Crest replaces a reactive, document-driven compliance programme with a proactive, code-driven compliance system.**
 
-| Metric | Traditional GRC | GRC Command Center |
+| Metric | Traditional GRC | GRC Crest |
 |---|---|---|
 | Automation rate | ~20% | 98.3% |
 | Time to detect a violation | Hours to days | Seconds |
@@ -1453,6 +1453,57 @@ Deep command of SOC 2 Trust Service Criteria, ISO 27001 Annex A, and NIST 800-53
 
 ---
 
+## About The Author
+
+My name is **Ige Fadele**.
+
+I have over 10 years of experience across software engineering, IT project management, product architecture, technical GRC, information security engineering, systems integration, AI automation, and infrastructure.
+
+This project is built from the perspective of someone who has worked close to both engineering execution and security governance.
+
+---
+
+## Hire Me
+
+I am open to opportunities with employers, organizations, founders, product teams, security teams, compliance teams, and technical leaders who need practical support across technical GRC, information security engineering, compliance automation, secure software delivery, product architecture, infrastructure, and AI-enabled operations.
+
+I am available for:
+
+- Consultancy engagements
+- Contract roles
+- Full-time roles
+- Part-time roles
+- B2B arrangements
+- Advisory and implementation support
+
+My availability is **06:00 - 23:00 UTC+1**, with flexibility for international teams and cross-time-zone collaboration.
+
+I am comfortable with:
+
+- Remote roles
+- In-office roles
+- Hybrid roles
+- International opportunities
+
+I am also **relocation ready** if the role is based in another country and the opportunity is a strong fit.
+
+---
+
+## Connect With Me
+
+- **Website / Portfolio:** [igefadele.savadub.com](https://igefadele.savadub.com)
+- **Email:** [ige.fadele@savaub.com](mailto:ige.fadele@savadub.com)
+- **LinkedIn:** [linkedin.com/in/igefadele](https://linkedin.com/in/igefadele)
+- **GitHub:** [github.com/igefadele](https://github.com/igefadele)
+- **Facebook:** [facebook.com/igefadele](https://facebook.com/igefadele)
+- **X (Twitter):** [x.com/igefadele](https://x.com/igefadele)
+- **Instagram:** [instagram.com/igefadele](https://instagram.com/igefadele)
+- **TikTok:** [tiktok.com/@igefadele](https://tiktok.com/@igefadele)
+- **YouTube:** [youtube.com/@igefadele](https://youtube.com/@igefadele)
+- **GRC Den:** [github.com/igefadele/grc-den](https://github.com/igefadele/grc-den)
+
+---
+
 ## Contributing
 
 1. Fork the repository and create a feature branch: `git checkout -b feature/your-feature-name`
@@ -1497,7 +1548,7 @@ Deep command of SOC 2 Trust Service Criteria, ISO 27001 Annex A, and NIST 800-53
 
 ## License
 
-MIT License — Copyright (c) 2025 GRC Command Center
+MIT License — Copyright (c) 2025 GRC Crest
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
 
@@ -1507,3 +1558,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 *Built by a Technical GRC Engineer, Security Compliance Architect, & Software Engineer.*
 *This platform represents the operational architecture for running GRC as a high-velocity, AI-augmented, continuous-by-design software system — not as an administrative function.*
+
+
+---
+
+## Recommended: [GRC Den](https://github.com/igefadele/grc-den)
+
+If you want to horn your skills in GRC, get production-grade GRC Artifacts that you cam start using today, or you want to transition to GRC, then The [GRC Den Repo](https://github.com/igefadele/grc-den) is the repo you need.
+
+It's free and open-source. I created [GRC Den](https://github.com/igefadele/grc-den) to help the GRC community, professionals, and those who want to save time doing trial-and-error artifacts creation.
+
+---
