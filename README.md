@@ -20,6 +20,27 @@
 
 ---
 
+## Demo
+
+GRC Crest Demo: [https://grccrest.savadub.com](https://grccrest.savadub.com)
+
+> Check the demo and explore the system on the link above.
+
+#### Demo Login: 
+- Email: admin@company.com
+- Password: 123456
+- Email OTP: 123456 | MFA OTP: 123456
+
+---
+
+## Screenshot
+
+![GRC Crest Dashboard Screenshot](./public/images/home.png)
+
+> GRC Crest Dashboard Screenshot
+
+---
+
 ## Table of Contents
 
 1. [What Is This? (Executive Summary)](#what-is-this-executive-summary)
