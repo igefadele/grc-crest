@@ -106,7 +106,7 @@ export async function getUserByEmail(email: string): Promise<GRCUser | null> {
 /**
  * Verifies a plaintext password against a stored bcrypt hash.
  *
- * In production this uses bcryptjs. For the development environment
+ * In production this uses bcrypt-ts. For the development environment
  * without the package installed, a fallback direct comparison is
  * provided for testing only — remove this in production.
  *
@@ -122,16 +122,16 @@ export async function verifyPassword(
     // REMOVE test env logic permission in production
     if (process.env.APP_ENV === 'test') return true;
 
-    // Production path: bcryptjs comparison
+    // Production path: bcrypt-ts comparison
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { compare } = require('bcrypt-ts')
     return await compare(plaintext, hashedPassword)
   } catch {
     // Development fallback: direct comparison
-    // WARNING: Only for dev/testing without bcryptjs installed
+    // WARNING: Only for dev/testing without bcrypt-ts installed
     // NEVER deploy with this fallback active
     if (process.env.APP_ENV === 'development') {
-      console.warn('[users.ts] bcryptjs not available — using plaintext comparison (dev only)')
+      console.warn('[users.ts] bcrypt-ts not available — using plaintext comparison (dev only)')
       return plaintext === hashedPassword
     }
     return false
