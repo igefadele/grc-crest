@@ -152,6 +152,14 @@ export default function LoginPage() {
           <div className="text-[9px] tracking-widest" style={{ color: 'var(--color-text-muted)' }}>
             AUTHORISED ACCESS ONLY
           </div>
+        </div> 
+      </div>
+
+      <div className='mb-4 flex justify-center text-center'>
+        <div className=''>
+          <p className='text-[12px]'>For Testing: Use the following credentials.</p>
+          <p className="text-[10px]"  style={{ color: 'var(--color-text-muted)' }}>Email: admin@company.com | Password: 123456</p>
+          <p className="text-[10px]"  style={{ color: 'var(--color-text-muted)' }}>TOTP: 123456 | MFA Code: 123456</p>
         </div>
       </div>
 

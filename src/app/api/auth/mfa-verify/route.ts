@@ -107,9 +107,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         { status: 400 },
       )
     }
-    verified = verifyTOTP(code, user.totpSecret)
+    verified = verifyTOTP(code, user.totpSecret);
+    console.log('TOTP: ', verified);
   } else if (method === 'email') {
-    verified = verifyEmailOTP(email, code)
+    verified = verifyEmailOTP(email, code);
+    console.log('email topt: ', verified);
   } else {
     return NextResponse.json(
       { success: false, error: 'Invalid MFA method.' },

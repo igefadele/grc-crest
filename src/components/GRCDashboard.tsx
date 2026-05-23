@@ -27,7 +27,7 @@ import { OPAGeneratorTab }   from '@/components/tabs/OPAGeneratorTab'
 import { EvidenceTrackerTab} from '@/components/tabs/EvidenceTrackerTab'
 import { IncidentPlaybookTab}from '@/components/tabs/IncidentPlaybookTab'
 import type { TabId } from '@/types/grc'
-
+import { LogoutButton } from '@/components/ui/LogoutButton'
 // ── Header KPI stats ──────────────────────────────────────────────────────────
 
 const HEADER_STATS = [
@@ -120,6 +120,9 @@ export function GRCDashboard() {
             <span className="animate-pulse-slow text-[7px]">●</span>
             LIVE
           </div>
+
+          {/* Logout Button */}
+          <LogoutButton />
         </div>
       </header>
 
