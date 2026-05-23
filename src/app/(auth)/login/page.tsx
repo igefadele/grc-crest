@@ -147,7 +147,7 @@ export default function LoginPage() {
         </div>
         <div>
           <div className="text-sm font-bold tracking-widest" style={{ color: 'var(--color-text)' }}>
-            GRC COMMAND CENTER
+            GRC CREST - COMMAND CENTER
           </div>
           <div className="text-[9px] tracking-widest" style={{ color: 'var(--color-text-muted)' }}>
             AUTHORISED ACCESS ONLY
