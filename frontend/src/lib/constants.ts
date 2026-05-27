@@ -5,7 +5,6 @@
  * Keeping data here (not inside components) means:
  * - Components stay clean and only contain rendering logic
  * - Data can be updated in one place
- * - Data can be replaced with real API calls later without touching components
  */
 
 import type {

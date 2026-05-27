@@ -128,7 +128,7 @@ export interface EvidenceRecord {
   /** Control identifier (e.g. "CC6.1", "A.9.2", "SC-28"). */
   id: string
   /** The compliance framework this control belongs to. */
-  framework: 'SOC 2' | 'ISO 27001' | 'NIST 800-53'
+  framework: 'SOC 2' | 'ISO 27001' | 'NIST 800-53' | 'GDPR' | 'HIPAA'
   /** Human-readable control name. */
   control: string
   status: ControlStatus

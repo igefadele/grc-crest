@@ -14,6 +14,7 @@ type WireIncident = Omit<Incident, 'timeline'> & {
 export async function fetchEvents(limit = 30): Promise<LiveEvent[]> {
   const response = await fetch(`${baseUrl}/events?limit=${limit}`, { cache: 'no-store' })
   if (!response.ok) return []
+
   const payload = (await response.json()) as WireEvent[]
   return payload.map(({ time, layer, msg, severity, auto }) => ({ time, layer, msg, severity, auto }))
 }
@@ -21,7 +22,8 @@ export async function fetchEvents(limit = 30): Promise<LiveEvent[]> {
 export async function fetchEvidence(framework?: string): Promise<EvidenceRecord[]> {
   const url = framework && framework !== 'ALL'
     ? `${baseUrl}/evidence?framework=${encodeURIComponent(framework)}`
-    : `${baseUrl}/evidence`
+    : `${baseUrl}/evidence`;
+
   const response = await fetch(url, { cache: 'no-store' })
   if (!response.ok) return []
   const payload = (await response.json()) as WireEvidence[]
@@ -41,6 +43,7 @@ export async function fetchIncidents(status?: string): Promise<Incident[]> {
   const url = status ? `${baseUrl}/incidents?status=${encodeURIComponent(status)}` : `${baseUrl}/incidents`
   const response = await fetch(url, { cache: 'no-store' })
   if (!response.ok) return []
+  
   const payload = (await response.json()) as WireIncident[]
   return payload.map((item) => ({
     id: item.id,
