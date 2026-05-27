@@ -1,11 +1,11 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
-import { UpsertEvidenceDto } from '../evidence/dto/upsert-evidence.dto'
-import { EvidenceService } from '../evidence/evidence.service'
-import { CreateEventDto } from '../events/dto/create-event.dto'
-import { EventsService } from '../events/events.service'
-import { UpsertIncidentDto } from '../incidents/dto/upsert-incident.dto'
-import { IncidentsService } from '../incidents/incidents.service'
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
+import { UpsertEvidenceDto } from '@/evidence/dto/upsert-evidence.dto'
+import { EvidenceService } from '@/evidence/evidence.service'
+import { CreateEventDto } from '@/events/dto/create-event.dto'
+import { EventsService } from '@/events/events.service'
+import { UpsertIncidentDto } from '@/incidents/dto/upsert-incident.dto'
+import { IncidentsService } from '@/incidents/incidents.service'
 
 @Controller('ingest')
 @UseGuards(JwtAuthGuard)

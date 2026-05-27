@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
-import { JwtAuthGuard } from './jwt-auth.guard'
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
 
 @Module({
   imports: [
@@ -11,8 +11,8 @@ import { JwtAuthGuard } from './jwt-auth.guard'
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
           issuer: configService.get<string>('JWT_ISSUER', 'crest-backend'),
-          audience: configService.get<string>('JWT_AUDIENCE', 'grc-crest'),
-          expiresIn: configService.get<string>('JWT_EXPIRES_IN', '12h'),
+          audience: configService.get<string>('JWT_AUDIENCE', 'crest-frontend'),
+          expiresIn: configService.get('JWT_EXPIRES_IN') || '12h',
         },
       }),
     }),

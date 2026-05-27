@@ -1,5 +1,5 @@
 import { Controller, Get, ParseIntPipe, Query } from '@nestjs/common'
-import { EventsService } from './events.service'
+import { EventsService } from '@/events/events.service'
 
 @Controller('events')
 export class EventsController {

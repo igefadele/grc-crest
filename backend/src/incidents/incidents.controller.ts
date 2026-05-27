@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common'
-import { IncidentsService } from './incidents.service'
+import { IncidentsService } from '@/incidents/incidents.service'
 
 @Controller('incidents')
 export class IncidentsController {

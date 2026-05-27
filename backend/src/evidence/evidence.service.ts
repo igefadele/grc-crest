@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '../prisma/prisma.service'
-import { RealtimeService } from '../realtime/realtime.service'
-import { UpsertEvidenceDto } from './dto/upsert-evidence.dto'
+import { PrismaService } from '@/prisma/prisma.service'
+import { RealtimeService } from '@/realtime/realtime.service'
+import { UpsertEvidenceDto } from '@/evidence/dto/upsert-evidence.dto'
 
 @Injectable()
 export class EvidenceService {

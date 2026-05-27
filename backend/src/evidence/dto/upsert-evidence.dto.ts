@@ -1,6 +1,6 @@
 import { IsIn, IsString } from 'class-validator'
 
-const frameworkValues = ['SOC 2', 'ISO 27001', 'NIST 800-53'] as const
+const frameworkValues = ['SOC 2', 'ISO 27001', 'NIST 800-53', 'GDPR'] as const
 const statusValues = ['PASS', 'FAIL', 'WARN', 'COLLECTING'] as const
 const ownerValues = ['AUTO', 'HUMAN'] as const
 

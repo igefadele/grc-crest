@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '../prisma/prisma.service'
-import { RealtimeService } from '../realtime/realtime.service'
-import { UpsertIncidentDto } from './dto/upsert-incident.dto'
+import { PrismaService } from '@/prisma/prisma.service'
+import { RealtimeService } from '@/realtime/realtime.service'
+import { UpsertIncidentDto } from '@/incidents/dto/upsert-incident.dto'
 
 @Injectable()
 export class IncidentsService {
