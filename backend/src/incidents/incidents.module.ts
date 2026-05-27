@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common'
 import { IncidentsController } from '@/incidents/incidents.controller'
 import { IncidentsService } from '@/incidents/incidents.service'
+import { RealtimeModule } from '@/realtime/realtime.module'
 
 @Module({
+  imports: [RealtimeModule],
   controllers: [IncidentsController],
   providers: [IncidentsService],
   exports: [IncidentsService],

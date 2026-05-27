@@ -3,6 +3,7 @@ import { PrismaService } from '@/prisma/prisma.service'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { UpsertIncidentDto } from '@/incidents/dto/upsert-incident.dto'
 
+
 @Injectable()
 export class IncidentsService {
   constructor(
@@ -18,7 +19,7 @@ export class IncidentsService {
         severity: payload.severity,
         status: payload.status,
         blastRadius: payload.blastRadius,
-        timelineJson: payload.timeline,
+        timelineJson: payload.timeline as any,
         aiSummary: payload.aiSummary,
         recommendation: payload.recommendation,
       },
@@ -28,7 +29,7 @@ export class IncidentsService {
         severity: payload.severity,
         status: payload.status,
         blastRadius: payload.blastRadius,
-        timelineJson: payload.timeline,
+        timelineJson: payload.timeline as any,
         aiSummary: payload.aiSummary,
         recommendation: payload.recommendation,
       },

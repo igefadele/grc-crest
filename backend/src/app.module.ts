@@ -14,6 +14,7 @@ import { RealtimeModule } from '@/realtime/realtime.module'
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
     }),
     JwtModule.register({}),
     PrismaModule,
@@ -27,3 +28,4 @@ import { RealtimeModule } from '@/realtime/realtime.module'
   controllers: [HealthController],
 })
 export class AppModule {}
+
