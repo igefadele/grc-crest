@@ -10,9 +10,6 @@
 
 import type {
   GRCLayer,
-  LiveEvent,
-  EvidenceRecord,
-  Incident,
   TabDefinition,
   ProviderMeta,
   AIProvider,
@@ -202,73 +199,6 @@ function shouldEscalate(event: GRCEvent): boolean {
     event.type as EscalationTrigger
   )
 }`,
-  },
-]
-
-// ─── Live Event Stream ────────────────────────────────────────────────────────
-
-export const LIVE_EVENTS: LiveEvent[] = [
-  { time: '00:03s', layer: 'cicd',  msg: 'TruffleHog blocked live AWS key in PR #4471',                            severity: 'blocked',   auto: true  },
-  { time: '00:11s', layer: 'ccm',   msg: 'IAM drift detected — baseline restored in 3.8s',                         severity: 'healed',    auto: true  },
-  { time: '00:28s', layer: 'pac',   msg: 'OPA denied public S3 bucket in staging deploy',                           severity: 'blocked',   auto: true  },
-  { time: '00:45s', layer: 'ai',    msg: "AI agent: Vendor 'Nexus Corp' SOC2 gap — MFA missing on backup storage",  severity: 'flagged',   auto: true  },
-  { time: '01:02s', layer: 'cicd',  msg: 'Snyk: CVE-2024-3811 (CVSS 9.1) blocked in node_modules',                severity: 'blocked',   auto: true  },
-  { time: '01:19s', layer: 'ccm',   msg: 'CloudTrail: Unauthorised IAM account creation — stripped + logged',      severity: 'healed',    auto: true  },
-  { time: '01:38s', layer: 'pac',   msg: 'Semgrep: SQL injection vector caught in payment-service PR',             severity: 'blocked',   auto: true  },
-  { time: '02:01s', layer: 'human', msg: 'ESCALATION: Legacy core module encryption variance — GRC sign-off req',  severity: 'escalated', auto: false },
-  { time: '02:24s', layer: 'ai',    msg: 'Evidence cron: 47 new audit artefacts collected from AWS Config',        severity: 'collected', auto: true  },
-  { time: '02:51s', layer: 'ccm',   msg: 'Prometheus: encryption key rotation overdue — auto-rotated',             severity: 'healed',    auto: true  },
-]
-
-// ─── Evidence Records ─────────────────────────────────────────────────────────
-
-export const INITIAL_EVIDENCE: EvidenceRecord[] = [
-  { id: 'CC6.1',  framework: 'SOC 2',       control: 'Logical Access Controls',     status: 'PASS',       evidence: 'AWS IAM policy export + CloudTrail log bundle',       lastChecked: '2025-05-21T08:00Z', nextDue: '2025-06-21', owner: 'AUTO'  },
-  { id: 'CC7.2',  framework: 'SOC 2',       control: 'System Monitoring',           status: 'PASS',       evidence: 'Datadog alert config snapshot + 30-day event log',    lastChecked: '2025-05-21T08:00Z', nextDue: '2025-06-21', owner: 'AUTO'  },
-  { id: 'CC8.1',  framework: 'SOC 2',       control: 'Change Management',           status: 'PASS',       evidence: 'GitHub PR audit log + OPA block events CSV',          lastChecked: '2025-05-21T08:00Z', nextDue: '2025-06-21', owner: 'AUTO'  },
-  { id: 'A.9.2',  framework: 'ISO 27001',   control: 'User Access Management',      status: 'WARN',       evidence: 'SSO export pending — stale account review overdue',   lastChecked: '2025-05-20T14:00Z', nextDue: '2025-05-22', owner: 'HUMAN' },
-  { id: 'A.12.6', framework: 'ISO 27001',   control: 'Patch Management',            status: 'PASS',       evidence: 'Snyk weekly report + Dependabot PR log',              lastChecked: '2025-05-21T08:00Z', nextDue: '2025-06-21', owner: 'AUTO'  },
-  { id: 'A.18.1', framework: 'ISO 27001',   control: 'Compliance with Legal Reqs',  status: 'COLLECTING', evidence: 'AI agent pulling GDPR transfer impact assessment',    lastChecked: '2025-05-21T09:30Z', nextDue: '2025-05-28', owner: 'AUTO'  },
-  { id: 'SC-28',  framework: 'NIST 800-53', control: 'Encryption at Rest',          status: 'PASS',       evidence: 'AWS Config rule — all EBS volumes encrypted',         lastChecked: '2025-05-21T08:00Z', nextDue: '2025-06-21', owner: 'AUTO'  },
-  { id: 'AU-2',   framework: 'NIST 800-53', control: 'Audit Events',                status: 'PASS',       evidence: 'CloudTrail trail config + S3 log bucket policy',      lastChecked: '2025-05-21T08:00Z', nextDue: '2025-06-21', owner: 'AUTO'  },
-  { id: 'IR-4',   framework: 'NIST 800-53', control: 'Incident Handling',           status: 'FAIL',       evidence: 'Tabletop exercise overdue — last run 180+ days ago',  lastChecked: '2025-03-01T00:00Z', nextDue: '2025-05-15', owner: 'HUMAN' },
-  { id: 'PM-9',   framework: 'NIST 800-53', control: 'Risk Management Strategy',    status: 'PASS',       evidence: 'Risk register snapshot + board approval PDF',         lastChecked: '2025-05-10T00:00Z', nextDue: '2025-08-10', owner: 'HUMAN' },
-]
-
-// ─── Incidents ───────────────────────────────────────────────────────────────
-
-export const INCIDENTS: Incident[] = [
-  {
-    id: 'INC-0041',
-    title: 'Unauthorised IAM Role Assumption — prod-data-pipeline',
-    severity: 'P1',
-    status: 'CONTAINED',
-    blastRadius: 'prod-data-pipeline role • S3 bucket: grc-evidence-store • No data exfil confirmed',
-    timeline: [
-      { ts: '09:14:02', event: 'CloudTrail: AssumeRole event from unrecognised IP 185.220.x.x (Tor exit node)', auto: true  },
-      { ts: '09:14:04', event: 'n8n automation: Session token revoked. Role policy stripped to baseline.',       auto: true  },
-      { ts: '09:14:07', event: 'Audit log entry appended. Evidence snapshot taken to append-only S3 bucket.',   auto: true  },
-      { ts: '09:14:09', event: 'AI agent: No S3 GetObject events in exposure window. Data confirmed intact.',   auto: true  },
-      { ts: '09:15:22', event: 'GRC escalation triggered — P1 threshold exceeded. AI brief dispatched.',        auto: true  },
-      { ts: '09:31:00', event: 'GRC Architect reviewed brief. Containment confirmed. Root-cause investigation opened.', auto: false },
-    ],
-    aiSummary: 'An IAM AssumeRole call originated from a Tor-exit-node IP at 09:14 UTC. The affected role (prod-data-pipeline) was automatically stripped within 2 seconds. No S3 GetObject events were logged during the 2-minute exposure window — data confirmed intact. Root cause: long-lived access key (180+ days) that bypassed MFA enforcement.',
-    recommendation: 'Enforce IAM key max-age policy via OPA Rego rule. Add AWS SCP to deny AssumeRole from non-corporate IP ranges. Rotate all keys older than 90 days immediately.',
-  },
-  {
-    id: 'INC-0039',
-    title: 'Public S3 Bucket Misconfiguration — dev-assets',
-    severity: 'P2',
-    status: 'RESOLVED',
-    blastRadius: 'dev-assets S3 bucket • Static front-end assets only • No PII or secrets confirmed',
-    timeline: [
-      { ts: '14:02:11', event: "OPA scan: aws_s3_bucket 'dev-assets' has ACL public-read — DENY triggered.", auto: true  },
-      { ts: '14:02:12', event: 'Terraform plan blocked. Remediation PR #3892 raised with corrected ACL.',      auto: true  },
-      { ts: '14:02:15', event: 'Audit log: violation event, PR ref, remediation artefact appended.',           auto: true  },
-      { ts: '14:04:00', event: 'Developer accepted auto-generated remediation PR. Bucket policy corrected.',   auto: false },
-    ],
-    aiSummary: 'A developer attempted to create a public S3 bucket without encryption or restricted ACL. OPA blocked the Terraform plan before any deployment and auto-generated a remediation PR. The bucket never reached production — zero exposure window.',
-    recommendation: 'Add S3 bucket guardrail at AWS Organisations SCP level as defence-in-depth. Add Checkov pre-commit hook to catch misconfigurations before push.',
   },
 ]
 

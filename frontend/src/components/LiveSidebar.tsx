@@ -10,7 +10,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { LIVE_EVENTS, LAYERS } from '@/lib/constants'
+import { LAYERS } from '@/lib/constants'
+import { connectRealtime, fetchEvents } from '@/lib/crestBackendClient'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { GlowButton } from '@/components/ui/GlowButton'
 import type { LiveEvent, SeverityKey } from '@/types/grc'
@@ -31,18 +32,21 @@ const KPI_STATS = [
 ]
 
 export function LiveSidebar() {
-  const [visibleEvents, setVisibleEvents] = useState<LiveEvent[]>([LIVE_EVENTS[0]])
-  const [idx, setIdx] = useState(0)
+  const [visibleEvents, setVisibleEvents] = useState<LiveEvent[]>([])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIdx((prev) => {
-        const next = (prev + 1) % LIVE_EVENTS.length
-        setVisibleEvents((events) => [LIVE_EVENTS[next], ...events].slice(0, 7))
-        return next
-      })
-    }, 2400)
-    return () => clearInterval(interval)
+    void fetchEvents(7).then((events) => {
+      setVisibleEvents(events.slice(0, 7))
+    })
+
+    const socket = connectRealtime()
+    socket.on('event.created', (event: LiveEvent) => {
+      setVisibleEvents((prev) => [event, ...prev].slice(0, 7))
+    })
+
+    return () => {
+      socket.disconnect()
+    }
   }, [])
 
   return (
@@ -137,8 +141,8 @@ export function LiveSidebar() {
           AI brief ready · Awaiting GRC sign-off
         </p>
         <div className="flex gap-2">
-          <GlowButton color="var(--color-red)"   className="flex-1 !py-1.5 !text-[8px]">REVIEW</GlowButton>
-          <GlowButton color="var(--color-green)" className="flex-1 !py-1.5 !text-[8px]">APPROVE</GlowButton>
+          <GlowButton color="var(--color-red)"   className="flex-1 py-1.5! text-[8px]!">REVIEW</GlowButton>
+          <GlowButton color="var(--color-green)" className="flex-1 py-1.5! text-[8px]!">APPROVE</GlowButton>
         </div>
       </div>
     </aside>

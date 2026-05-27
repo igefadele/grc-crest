@@ -15,8 +15,8 @@
 
 'use client'
 
-import { useState } from 'react'
-import { INITIAL_EVIDENCE } from '@/lib/constants'
+import { useEffect, useState } from 'react'
+import { connectRealtime, fetchEvidence } from '@/lib/crestBackendClient'
 import { GlowButton } from '@/components/ui/GlowButton'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import type { EvidenceRecord, ControlStatus } from '@/types/grc'
@@ -37,10 +37,28 @@ function statusColor(s: ControlStatus | string): string {
 }
 
 export function EvidenceTrackerTab() {
-  const [evidence,   setEvidence]   = useState<EvidenceRecord[]>(INITIAL_EVIDENCE)
+  const [evidence,   setEvidence]   = useState<EvidenceRecord[]>([])
   const [filter,     setFilter]     = useState<Framework>('ALL')
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [collecting, setCollecting] = useState<string | null>(null)
+
+  useEffect(() => {
+    void fetchEvidence().then((rows) => setEvidence(rows))
+
+    const socket = connectRealtime()
+    socket.on('evidence.updated', (record: EvidenceRecord) => {
+      setEvidence((prev) => {
+        const exists = prev.some((item) => item.id === record.id)
+        if (exists) {
+          return prev.map((item) => (item.id === record.id ? record : item))
+        }
+        return [record, ...prev]
+      })
+    })
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
 
   const filtered = filter === 'ALL' ? evidence : evidence.filter((e) => e.framework === filter)
   const selected = evidence.find((e) => e.id === selectedId) ?? null
@@ -186,7 +204,7 @@ export function EvidenceTrackerTab() {
                       color="var(--color-purple)"
                       onClick={() => triggerCollection(ev.id)}
                       disabled={isCollecting}
-                      className="!px-2 !py-0.5 !text-[8px]"
+                      className="px-2! py-0.5! text-[8px]!"
                     >
                       {isCollecting ? '...' : 'COLLECT'}
                     </GlowButton>

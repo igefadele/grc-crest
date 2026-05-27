@@ -14,9 +14,9 @@
 
 'use client'
 
-import { useState } from 'react'
-import { INCIDENTS } from '@/lib/constants'
+import { useEffect, useState } from 'react'
 import { callAIJson } from '@/lib/aiClient'
+import { connectRealtime, fetchIncidents } from '@/lib/crestBackendClient'
 import { INCIDENT_RCA_SYSTEM_PROMPT } from '@/lib/prompts'
 import { GlowButton } from '@/components/ui/GlowButton'
 import { StatusBadge } from '@/components/ui/StatusBadge'
@@ -32,14 +32,43 @@ function statusColor(s: IncidentStatus): string {
 }
 
 export function IncidentPlaybookTab() {
-  const [selectedId,  setSelectedId]  = useState<string>(INCIDENTS[0].id)
+  const [incidents,   setIncidents]   = useState<Incident[]>([])
+  const [selectedId,  setSelectedId]  = useState<string>('')
   const [aiLoading,   setAiLoading]   = useState(false)
   const [aiAnalysis,  setAiAnalysis]  = useState<AIRootCauseAnalysis | null>(null)
   const [aiError,     setAiError]     = useState<string | null>(null)
   const [newIncOpen,  setNewIncOpen]  = useState(false)
   const [newDesc,     setNewDesc]     = useState('')
 
-  const inc: Incident | undefined = INCIDENTS.find((i) => i.id === selectedId)
+  useEffect(() => {
+    void fetchIncidents().then((rows) => {
+      setIncidents(rows)
+      if (rows.length > 0) {
+        setSelectedId(rows[0].id)
+      }
+    })
+
+    const socket = connectRealtime()
+    socket.on('incident.updated', (record: Incident) => {
+      setIncidents((prev) => {
+        const exists = prev.some((item) => item.id === record.id)
+        return exists
+          ? prev.map((item) => (item.id === record.id ? record : item))
+          : [record, ...prev]
+      })
+    })
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!selectedId && incidents.length > 0) {
+      setSelectedId(incidents[0].id)
+    }
+  }, [incidents, selectedId])
+
+  const inc: Incident | undefined = incidents.find((i) => i.id === selectedId)
 
   function selectIncident(id: string) {
     setSelectedId(id)
@@ -82,7 +111,7 @@ export function IncidentPlaybookTab() {
           INCIDENT REGISTER
         </div>
 
-        {INCIDENTS.map((i) => (
+        {incidents.map((i) => (
           <button
             key={i.id}
             onClick={() => selectIncident(i.id)}
@@ -111,7 +140,7 @@ export function IncidentPlaybookTab() {
         <GlowButton
           color="var(--color-teal)"
           onClick={() => setNewIncOpen(!newIncOpen)}
-          className="w-full !py-2 mt-1"
+          className="w-full py-2! mt-1"
         >
           + NEW INCIDENT
         </GlowButton>
@@ -137,7 +166,7 @@ export function IncidentPlaybookTab() {
             />
             <GlowButton
               color="var(--color-teal)"
-              className="w-full !py-1.5 mt-2 !text-[9px]"
+              className="w-full py-1.5! mt-2 text-[9px]!"
             >
               LOG INCIDENT
             </GlowButton>
@@ -238,7 +267,7 @@ export function IncidentPlaybookTab() {
             color={aiLoading ? 'var(--color-text-dim)' : 'var(--color-purple)'}
             onClick={runRCA}
             disabled={aiLoading}
-            className="w-full !py-2.5"
+            className="w-full py-2.5!"
           >
             {aiLoading
               ? '⟳  RUNNING AI ROOT CAUSE ANALYSIS...'
