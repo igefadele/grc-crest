@@ -10,6 +10,10 @@ import { IngestionModule } from '@/ingestion/ingestion.module'
 import { PrismaModule } from '@/prisma/prisma.module'
 import { RealtimeModule } from '@/realtime/realtime.module'
 
+/**
+ * Root module for the backend application.
+ * Imports feature modules and global configuration providers.
+ */
 @Module({
   imports: [
     ConfigModule.forRoot({

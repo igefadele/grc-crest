@@ -3,6 +3,10 @@ import { ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
 
+/**
+ * Authentication module for ingestion routes.
+ * Configures JWT support using environment variables and exports auth guards.
+ */
 @Module({
   imports: [
     JwtModule.registerAsync({
